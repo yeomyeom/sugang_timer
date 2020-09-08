@@ -1,0 +1,6 @@
+popup.js = popup.html에 사용할 스크립트
+popup.html = 크롬에 띄울 창 배치
+payload.js = 확프 실행할때 바로 같이 실행되는 스크립트(popup.js에 정의되어있음)
+
+
+1. 크롬 확장 프로그램이 실행되면서 popup.html 실행되고 이후에 popup.js가 실행
