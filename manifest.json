@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "sugang_timer",
 	"short_name": "ST",
-	"description": "",
+	"description": "sugang timer",
 	"version": "1.0",
 	"author": [
 		"yeomyeom"
@@ -15,14 +15,15 @@
 	},
 	"permissions": [
 		"tabs",
-		"https://*/*",
-		"http://*/*"
+		"activeTab",
+		"<all_urls>"
 	],
 	"content_security_policy": "script-src 'self' https://code.jquery.com/jquery-3.3.1.min.js; object-src 'self'",
 	"content_scripts": [
 		{
 			"js": [
-				"payload.js"
+				"payload.js",
+				"popup.js"
 			],
 			"matches": [
 				"http://*/*",
