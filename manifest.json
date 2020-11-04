@@ -2,8 +2,8 @@
 	"manifest_version": 2,
 	"name": "sugang_timer",
 	"short_name": "ST",
-	"description": "sugang timer",
-	"version": "1.0",
+	"description": "수강신청 및 티켓팅 할때 해당 시간에 페이지를 새로고침 해주는 확장 프로그램",
+	"version": "1.1",
 	"author": [
 		"yeomyeom"
 	],

@@ -70,7 +70,7 @@ function getservertime(serverurl, stopTime){
             var serverTime = xhr.getResponseHeader('Date')
             var localTime = Date.parse(serverTime)
             startTime = new Date(localTime)
-            var koreaTime = startTime.toLocaleString('en-US', {timeZone: 'Asia/Seoul'})
+            //var koreaTime = startTime.toLocaleString('en-US', {timeZone: 'Asia/Seoul'})
             //var koreaTime = localTime.toLocaleString('en-US', {timeZone: 'America/New_York'})
             //Servertime : Tue, 03 Nov 2020 07:06:45 GMT
             //localTime : Tue Nov 03 2020 16:06:45 GMT+0900 (대한민국 표준시)
@@ -112,7 +112,7 @@ function timerStart(startTime, stopTime){
         }
         if(offset <= 0){
             chrome.tabs.reload()//time is over refrash
-            document.getElementById("msg").innerHTML = "refrash"
+            document.getElementById("msg").innerHTML = "refresh"
             document.getElementById('btn').style.display='none'
             //alert('delete cookie')
             killCookie()
