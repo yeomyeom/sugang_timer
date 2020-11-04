@@ -15,6 +15,7 @@
 	},
 	"permissions": [
 		"tabs",
+		"cookies",
 		"activeTab",
 		"<all_urls>"
 	],
