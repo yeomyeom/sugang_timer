@@ -1,11 +1,11 @@
-var timerIsAlive = null
+var timerIsAlive
 var serverUrl
 
 window.addEventListener('load', function (evt) {
 	chrome.extension.getBackgroundPage().chrome.tabs.executeScript(null, {
 		file: 'payload.js'
-	});
-});
+    })
+})
 chrome.runtime.onMessage.addListener(function(message){
     serverUrl = message
 })
@@ -13,7 +13,9 @@ chrome.runtime.onMessage.addListener(function(message){
 window.onload = function(){
     makeList()
     document.getElementById('start').addEventListener('click', ActiveButton)
+    document.getElementById('stop').addEventListener('click', DeactivButton)
 }
+
 function makeList(){
     for (var i = 0; i<24; i++){
         $('#hourOption').append('<option value="'+i+'">'+String(i)+'</option>')
@@ -28,6 +30,9 @@ function makeList(){
 function ActiveButton(){
     var stopTime = selectBoxVal()
     getservertime(serverUrl, stopTime)//location.href==chrome extension
+}
+function DeactivButton(){
+    timerIsAlive = false
 }
 
 function getservertime(serverurl, stopTime){
@@ -54,16 +59,21 @@ function getservertime(serverurl, stopTime){
 
 function timerStart(startTime, stopTime){
     const sec = 1000, min = sec * 60, hour = min * 60, day = hour * 24
+    timerIsAlive = true
     offset = stopTime - startTime
     if(offset < 0){
         stopTime.setDate(stopTime.getDate() + 1)
         offset = stopTime - startTime
     }
+    
     timer = setInterval(function(){
         offset = stopTime - startTime
         if(offset <= 0){
             chrome.tabs.reload()//time is over refrash
             document.getElementById("message").innerHTML = "refrash"
+            clearInterval(timer)
+        }
+        if(!timerIsAlive){
             clearInterval(timer)
         }
         document.getElementById("H").innerText = Math.floor((offset % (day))/(hour))

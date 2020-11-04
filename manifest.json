@@ -9,9 +9,10 @@
 	],
 	"background": {
 		"scripts": [
-			"popup.js"
+			"popup.js",
+			"payload.js"
 		],
-		"persistent": true
+		"persistent": false
 	},
 	"permissions": [
 		"tabs",
