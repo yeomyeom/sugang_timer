@@ -29,6 +29,7 @@ function makeList(){
 }
 function ActiveButton(){
     var stopTime = selectBoxVal()
+    document.getElementById('start').style.display='none'
     getservertime(serverUrl, stopTime)//location.href==chrome extension
 }
 function DeactivButton(){
