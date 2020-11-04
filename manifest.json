@@ -9,6 +9,7 @@
 	],
 	"background": {
 		"scripts": [
+			"payload.js",
 			"popup.js"
 		],
 		"persistent": false
