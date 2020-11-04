@@ -1,5 +1,6 @@
 var timerIsAlive
 var serverUrl
+var tabId
 /*
 window.addEventListener('load', function (evt) {
 	chrome.extension.getBackgroundPage().chrome.tabs.executeScript(null, {
@@ -16,13 +17,14 @@ window.onload = function(){
     })
     chrome.runtime.onMessage.addListener(function(message){
         serverUrl = message['url']
+        //tabId = chrome.tabs.id
         try{
             chrome.cookies.get({'name': 'time', 'url': String(serverUrl)}, function (cookie){
                 //alert('yes cookie')
                 if(cookie){
                     val = JSON.parse(cookie.value)
                     stopTime = new Date(val['stop'])
-                    getservertime(serverUrl, stopTime)
+                    timerOn(stopTime)
                 }else{
                     killCookie()
                     //alert('no cookie')
@@ -46,20 +48,16 @@ function makeList(){
         $('#minOption').append('<option value="'+i+'">'+String(i)+'</option>')
         $('#secOption').append('<option value="'+i+'">'+String(i)+'</option>')
     }
-    document.getElementById('start').addEventListener('click', ActiveButton)
-    document.getElementById('stop').addEventListener('click', DeactivButton)
+    document.getElementById('btn').addEventListener('click', ActiveButton)
 }
 function ActiveButton(){
     var stopTime = selectBoxVal()
-    document.getElementById('start').style.display='none'
-    document.getElementById('message').innerHtml = ' '
-    getservertime(serverUrl, stopTime)//location.href==chrome extension
+    timerOn(stopTime)
 }
 function DeactivButton(){
     timerIsAlive = false
-    document.getElementById('message').innerHTML = "STOP"
-    document.getElementById('start').style.display='none'
-    document.getElementById('stop').style.display='none'
+    document.getElementById('msg').innerHTML = "STOP"
+    document.getElementById('btn').style.display='none'
     //alert('delete cookie')
     killCookie()
 }
@@ -84,9 +82,17 @@ function getservertime(serverurl, stopTime){
             timerStart(startTime, stopTime)
         },
         error: function(e){
-            document.getElementById("message").innerHTML = "Server connect fail "
+            document.getElementById("msg").innerHTML = "Server connect fail "
         }
     });
+}
+
+function timerOn(stopTime){
+    document.getElementById('btn').innerHTML='stop'
+    document.getElementById('msg').innerHTML='Keep this timer display'
+    document.getElementById('btn').removeEventListener('click', ActiveButton)
+    document.getElementById('btn').addEventListener('click', DeactivButton)
+    getservertime(serverUrl, stopTime)//location.href==chrome extension
 }
 
 function timerStart(startTime, stopTime){
@@ -99,10 +105,17 @@ function timerStart(startTime, stopTime){
     }
     timer = setInterval(function(){
         offset = stopTime - startTime
+        if(offset < 10000){
+            document.getElementById("msg").innerHTML = "Dont touch anything!"
+            //focus signal need
+            //chrome.tabs.update(tabId, {'active': true, 'highlighted': true})
+        }
         if(offset <= 0){
             chrome.tabs.reload()//time is over refrash
-            document.getElementById("message").innerHTML = "refrash"
-            DeactivButton()
+            document.getElementById("msg").innerHTML = "refrash"
+            document.getElementById('btn').style.display='none'
+            //alert('delete cookie')
+            killCookie()
             clearInterval(timer)
         }
         if(!timerIsAlive){
