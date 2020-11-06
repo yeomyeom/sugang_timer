@@ -89,7 +89,7 @@ function getservertime(serverurl, stopTime){
 
 function timerOn(stopTime){
     document.getElementById('btn').innerHTML='stop'
-    document.getElementById('msg').innerHTML='Keep this timer display'
+    document.getElementById('msg').innerHTML='Keep this timer displayed'
     document.getElementById('btn').removeEventListener('click', ActiveButton)
     document.getElementById('btn').addEventListener('click', DeactivButton)
     getservertime(serverUrl, stopTime)//location.href==chrome extension
